@@ -12,14 +12,13 @@ export default function RoomContainer() {
                 if (loading){
                     return <Loading />
                 } else {
-                    
-                }
-                return (
-                        <div>
-                            Hello from rooms container
-                            <RoomsFilter rooms={rooms}/>
-                            <RoomsList rooms={sortedRooms}/>
-                        </div>)
+                    return (
+                            <div>
+                                Hello from rooms container
+                                <RoomsFilter rooms={rooms}/>
+                                <RoomsList rooms={sortedRooms}/>
+                            </div>)
+                    }
                 }
             }
         </RoomConsumer>
