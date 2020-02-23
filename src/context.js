@@ -57,7 +57,7 @@ export default class RoomProvider extends Component {
 
     handleChange = (e) => {
         const target = e.target
-        const value = e.type === 'checkbox' ? target.checked : target.value
+        const value = target.type === 'checkbox' ? target.checked : target.value
         const name = e.target.name
         
         this.setState({
@@ -68,22 +68,40 @@ export default class RoomProvider extends Component {
     filterRooms = () => {
         let {rooms, type, capacity, price, minSize, maxSize, breakfast, pets} = this.state
         // all rooms
-        let tempRooms = [...rooms]
+        let filteredRooms = [...rooms]
         //transform value to number if necessary
         capacity = parseInt(capacity, 10)
+        price = parseInt(price, 10)
 
         // filter by type
         if (type !== "all"){
-            tempRooms = tempRooms.filter(room => room.type === type)
+            filteredRooms = filteredRooms.filter(room => room.type === type)
         }
 
         // filter by capacity
-            // filter by type
-            if (capacity !== 1){
-                tempRooms = tempRooms.filter(room => room.capacity >= capacity)
-            }
+        if (capacity !== 1){
+            filteredRooms = filteredRooms.filter(room => room.capacity >= capacity)
+        }
+
+        // filter by price
+        filteredRooms = filteredRooms.filter(room => room.price <= price)
+
+        // filter by size
+        filteredRooms = filteredRooms.filter(room => room.size >= minSize && room.size <= maxSize)
+
+        // filter by breakfast
+        if (breakfast){
+            filteredRooms = filteredRooms.filter(room => room.breakfast === true)
+        }
+
+        // filter by pets
+        if (pets){
+            filteredRooms = filteredRooms.filter(room => room.pets === true)
+        }
+
+        // change state
         this.setState({
-            sortedRooms: tempRooms
+            sortedRooms: filteredRooms
         })
     }
 
