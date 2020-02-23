@@ -9,7 +9,17 @@ export default class RoomProvider extends Component {
         rooms: [],
         sortedRooms: [],
         featuredRooms: [],
-        loading: true
+        loading: true,
+        type: "all",
+        capacity: 1,
+        price: 0,
+        minPrice: 0,
+        maxPrice: 0,
+        minSize: 0,
+        maxSize: 0,
+        breakfast: false,
+        pet: false
+
     }
 
     componentDidMount(){
@@ -53,6 +63,7 @@ export default class RoomProvider extends Component {
 
 const RoomConsumer = RoomContext.Consumer
 
+// HOC function
 export function withRoomConsumer(Component){
     return function ConsumerWrapper(props){
         return (

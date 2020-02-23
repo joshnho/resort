@@ -1,4 +1,4 @@
-// Using Higher Order Component
+// Using Higher Order Component(HOC)
 import React from 'react'
 import RoomsFilter from './RoomsFilter'
 import RoomsList from './RoomsList'
@@ -11,7 +11,7 @@ function RoomContainer({context}){
         return <Loading />
     }
     return (
-            <>``
+            <>
                 <RoomsFilter rooms={rooms}/>
                 <RoomsList rooms={sortedRooms}/>
             </>
@@ -21,7 +21,7 @@ function RoomContainer({context}){
 
 export default withRoomConsumer(RoomContainer)
 
-// Not using Higher Order Component
+// Not using HOC
 // import React from 'react'
 // import RoomsFilter from './RoomsFilter'
 // import RoomsList from './RoomsList'
