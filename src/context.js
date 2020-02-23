@@ -25,11 +25,17 @@ export default class RoomProvider extends Component {
     componentDidMount(){
         let rooms = this.formatData(items)
         let featuredRooms = rooms.filter(room => room.featured === true)
+        let maxPrice = Math.max(...rooms.map(room => room.price))
+        let maxSize = Math.max(...rooms.map(room => room.size))
         this.setState({
             rooms,
             featuredRooms,
             sortedRooms: rooms,
-            loading: false
+            loading: false,
+            price: maxPrice,
+            maxPrice,
+            maxSize
+
         })
     }
 
@@ -49,11 +55,44 @@ export default class RoomProvider extends Component {
         return room
     }
 
+    handleChange = (e) => {
+        const target = e.target
+        const value = e.type === 'checkbox' ? target.checked : target.value
+        const name = e.target.name
+        
+        this.setState({
+            [name]: value
+        },this.filterRooms)
+    }
+
+    filterRooms = () => {
+        let {rooms, type, capacity, price, minSize, maxSize, breakfast, pets} = this.state
+        // all rooms
+        let tempRooms = [...rooms]
+        //transform value to number if necessary
+        capacity = parseInt(capacity, 10)
+
+        // filter by type
+        if (type !== "all"){
+            tempRooms = tempRooms.filter(room => room.type === type)
+        }
+
+        // filter by capacity
+            // filter by type
+            if (capacity !== 1){
+                tempRooms = tempRooms.filter(room => room.capacity >= capacity)
+            }
+        this.setState({
+            sortedRooms: tempRooms
+        })
+    }
+
     render() {
         return (
             <RoomContext.Provider value={{
                 ...this.state,
-                getRoom: this.getRoom
+                getRoom: this.getRoom,
+                handleChange: this.handleChange
                 }}>
                 {this.props.children}
             </RoomContext.Provider>
